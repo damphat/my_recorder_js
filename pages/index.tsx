@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 class Recorder {
   private mediaRecorder: MediaRecorder | undefined;
 
@@ -32,7 +31,7 @@ const Home = () => {
     try {
       const r = new Recorder();
       setRecorder(r);
-      setBlobURLs([await r.start(), ...blobURLs]);
+      setBlobURLs([...blobURLs, await r.start()]);
     } catch (e) {
       alert(e);
     } finally {
@@ -44,23 +43,30 @@ const Home = () => {
     recorder?.stop();
   }
 
+  function remove(blob: string) {
+    setBlobURLs(blobURLs.filter(t => t != blob));
+  }
+
   return (
     <div>
-      <div className="p-8">
-        <div className="btn-group">
-          <button className="btn" onClick={record} disabled={!!recorder}>
-            Start
+      <div className="flex m-4 gap-4">
+          <button className=" w-1/2 disabled:bg-gray-400 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={record} disabled={!!recorder}>
+            Record
           </button>
-          <button className="btn" onClick={stop} disabled={!recorder}>
+          <button className="w-1/2 disabled:bg-gray-400 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={stop} disabled={!recorder}>
             Stop
           </button>
-        </div>
       </div>
-      <center className="p-8">
-        {blobURLs.map((blobURL) => (
-          <audio key={blobURL} src={blobURL} controls />
+      {recorder && <div className="h-12 w-full text-center m-4">recording</div>}
+      <div className="flex flex-col-reverse">
+        {blobURLs.map((blobURL, i) => (
+          <div key={blobURL} className="flex m-4 justify-center items-center bg-orange-50">
+            <div className="w-12 h-12 flex justify-center items-center">{i}</div>
+            <audio className="w-full h-12" key={blobURL} src={blobURL} controls />
+            <button className="w-12 h-12 bg-white hover:bg-blue" onClick={() => remove(blobURL)}>❌</button>
+          </div>
         ))}
-      </center>
+      </div>
     </div>
   );
 };
