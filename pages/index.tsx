@@ -58,7 +58,7 @@ const Home = () => {
       </div>
       <center className="p-8">
         {blobURLs.map((blobURL) => (
-          <audio src={blobURL} controls />
+          <audio key={blobURL} src={blobURL} controls />
         ))}
       </center>
     </div>
