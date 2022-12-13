@@ -10,7 +10,7 @@ class Recorder {
       this.mediaRecorder!.start();
       this.mediaRecorder!.ondataavailable = (ev) => {
         resolve(URL.createObjectURL(ev.data));
-        stream.getTracks().forEach(t => t.stop());
+        stream.getTracks().forEach((t) => t.stop());
       };
       this.mediaRecorder!.onerror = (ev) => {
         reject(ev.target);
@@ -44,26 +44,49 @@ const Home = () => {
   }
 
   function remove(blob: string) {
-    setBlobURLs(blobURLs.filter(t => t != blob));
+    setBlobURLs(blobURLs.filter((t) => t != blob));
   }
 
   return (
     <div>
-      <div className="flex m-4 gap-4">
-          <button className=" w-1/2 disabled:bg-gray-400 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={record} disabled={!!recorder}>
-            Record
-          </button>
-          <button className="w-1/2 disabled:bg-gray-400 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={stop} disabled={!recorder}>
-            Stop
-          </button>
+      <div className="m-4 flex gap-4">
+        <button
+          className=" w-1/2 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700 disabled:bg-gray-400"
+          onClick={record}
+          disabled={!!recorder}
+        >
+          Record
+        </button>
+        <button
+          className="w-1/2 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700 disabled:bg-gray-400"
+          onClick={stop}
+          disabled={!recorder}
+        >
+          Stop
+        </button>
       </div>
-      {recorder && <div className="h-12 w-full text-center m-4">recording</div>}
+      {recorder && <div className="m-4 h-12 w-full text-center">recording</div>}
       <div className="flex flex-col-reverse">
         {blobURLs.map((blobURL, i) => (
-          <div key={blobURL} className="flex m-4 justify-center items-center bg-orange-50">
-            <div className="w-12 h-12 flex justify-center items-center">{i}</div>
-            <audio className="w-full h-12" key={blobURL} src={blobURL} controls />
-            <button className="w-12 h-12 bg-white hover:bg-blue" onClick={() => remove(blobURL)}>❌</button>
+          <div
+            key={blobURL}
+            className="m-4 flex items-center justify-center bg-orange-50"
+          >
+            <div className="flex h-12 w-12 items-center justify-center">
+              {i}
+            </div>
+            <audio
+              className="h-12 w-full"
+              key={blobURL}
+              src={blobURL}
+              controls
+            />
+            <button
+              className="hover:bg-blue h-12 w-12 bg-white"
+              onClick={() => remove(blobURL)}
+            >
+              ❌
+            </button>
           </div>
         ))}
       </div>
