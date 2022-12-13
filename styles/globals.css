@@ -24,3 +24,18 @@ a {
     background: black;
   }
 }
+
+.p-8 {
+  padding: 8px;
+}
+
+.btn {
+  padding: 8px 16px;
+}
+
+.btn-group {
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 12px;
+}
