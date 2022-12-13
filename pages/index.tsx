@@ -11,7 +11,7 @@ class Recorder {
       this.mediaRecorder!.start();
       this.mediaRecorder!.ondataavailable = (ev) => {
         resolve(URL.createObjectURL(ev.data));
-        stream.getAudioTracks()[0].stop();
+        stream.getTracks().forEach(t => t.stop());
       };
       this.mediaRecorder!.onerror = (ev) => {
         reject(ev.target);
