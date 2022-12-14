@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Recorder } from "../utils/Recorder";
+import { RecordButton } from "../components/buttons";
 
 const Home = () => {
   const [recorder, setRecorder] = useState<Recorder>();
@@ -27,16 +28,13 @@ const Home = () => {
 
   return (
     <div className="container max-w-md m-auto">
-      <div className="m-4 flex gap-4">
-        <button
-          className=" w-1/2 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700 disabled:bg-gray-400"
+      <div className="m-4 flex gap-4 items-center justify-center">
+        <RecordButton
           onClick={record}
           disabled={!!recorder}
-        >
-          Record
-        </button>
+        />
         <button
-          className="w-1/2 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700 disabled:bg-gray-400"
+          className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700 disabled:bg-gray-400"
           onClick={stop}
           disabled={!recorder}
         >
